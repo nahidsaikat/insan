@@ -1465,6 +1465,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Date'**
   String get date;
+
+  /// No description provided for @searchParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Party'**
+  String get searchParty;
+
+  /// No description provided for @searchPartyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter name or phone number...'**
+  String get searchPartyHint;
+
+  /// No description provided for @allTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'All Types'**
+  String get allTypes;
+
+  /// No description provided for @partyType.
+  ///
+  /// In en, this message translates to:
+  /// **'Party Type'**
+  String get partyType;
+
+  /// No description provided for @confirmDeleteParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this party?'**
+  String get confirmDeleteParty;
+
+  /// No description provided for @partyTypeEmptyValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a party type.'**
+  String get partyTypeEmptyValidation;
+
+  /// No description provided for @partyNameTypeEmptyValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Party name and type cannot be empty.'**
+  String get partyNameTypeEmptyValidation;
 }
 
 class _AppLocalizationsDelegate

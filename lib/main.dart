@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 import './database/database_helper.dart';
 import './models/season.dart';
 import './l10n/app_localizations.dart';
 import './screens/season_management_screen.dart';
 import './screens/dashboard_screen.dart';
+import './providers/theme_provider.dart';
 
 // Your existing main function (if any)
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()), // Provide ThemeProvider
+        // Add other providers here if you have them, e.g., for user preferences later
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -46,9 +58,29 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'AgroStock Manager', // This title might still appear in app switcher
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.light, // Default light theme
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+        ),
+        // Define other light theme properties
+      ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.indigo, // Or any color for dark mode primary
+        brightness: Brightness.dark, // Dark theme
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.indigo, // Darker app bar for dark mode
+          foregroundColor: Colors.white,
+        ),
+        // Define other dark theme properties
+      ),
+      themeMode: themeProvider.themeMode,
       // Localization setup
       localizationsDelegates: const [
         AppLocalizations.delegate, // Your generated app localizations

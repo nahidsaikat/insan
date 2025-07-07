@@ -722,4 +722,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get date => 'Date';
+
+  @override
+  String get searchParty => 'Search Party';
+
+  @override
+  String get searchPartyHint => 'Enter name or phone number...';
+
+  @override
+  String get allTypes => 'All Types';
+
+  @override
+  String get partyType => 'Party Type';
+
+  @override
+  String get confirmDeleteParty =>
+      'Are you sure you want to delete this party?';
+
+  @override
+  String get partyTypeEmptyValidation => 'Please select a party type.';
+
+  @override
+  String get partyNameTypeEmptyValidation =>
+      'Party name and type cannot be empty.';
 }

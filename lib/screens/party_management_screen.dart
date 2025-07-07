@@ -1,7 +1,14 @@
+// lib/screens/party_management_screen.dart
+
 import 'package:flutter/material.dart';
 import '../database/database_helper.dart';
 import '../models/party.dart';
 import '../l10n/app_localizations.dart';
+
+// Assuming you have these screens for navigation, even if not directly called in this file
+// import '../screens/party_detail_screen.dart';
+// import '../screens/add_edit_party_screen.dart';
+
 
 class PartyManagementScreen extends StatefulWidget {
   final DatabaseHelper dbHelper;
@@ -17,17 +24,23 @@ class PartyManagementScreen extends StatefulWidget {
 
 class _PartyManagementScreenState extends State<PartyManagementScreen> {
   List<Party> _parties = [];
-  String _selectedPartyTypeFilter = 'All'; // Filter for displaying parties
+  bool _isLoading = true; // Added loading state for clarity
 
+  // Existing filter state variables for add/edit dialog
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   String? _selectedPartyType; // For the dropdown in add/edit dialog
 
+  // NEW: Filter state variables for search and filtering the list view
+  String _currentSelectedPartyTypeFilter = 'All'; // Filter for displaying parties
+  final TextEditingController _searchController = TextEditingController(); // For party name/phone search
+  List<String> _availablePartyTypes = ['All', 'Investor', 'Farmer', 'Customer', 'Other Vendor']; // Initial list of types for filter dropdown
+
   @override
   void initState() {
     super.initState();
-    _loadParties();
+    _loadAvailablePartyTypesAndParties(); // Load available types and then parties
   }
 
   @override
@@ -35,19 +48,76 @@ class _PartyManagementScreenState extends State<PartyManagementScreen> {
     _nameController.dispose();
     _contactController.dispose();
     _addressController.dispose();
+    _searchController.dispose(); // Dispose the new search controller
     super.dispose();
   }
 
-  Future<void> _loadParties() async {
-    List<Party> parties;
-    if (_selectedPartyTypeFilter == 'All') {
-      parties = await widget.dbHelper.getParties();
-    } else {
-      parties = await widget.dbHelper.getPartiesByType(_selectedPartyTypeFilter);
-    }
+  // NEW: Method to load available party types from DB and then initial parties
+  Future<void> _loadAvailablePartyTypesAndParties() async {
     setState(() {
-      _parties = parties;
+      _isLoading = true;
     });
+    try {
+      // Get types from DB. This is important to ensure consistency if types change.
+      List<String> dbTypes = await widget.dbHelper.getDistinctPartyTypes();
+      // Ensure 'All' is always the first option
+      _availablePartyTypes = ['All', ...dbTypes];
+      // Set initial selection
+      _currentSelectedPartyTypeFilter = _availablePartyTypes.first;
+
+    } catch (e) {
+      print('Error loading available party types: $e');
+    } finally {
+      await _loadParties(); // Load parties with initial filters
+    }
+  }
+
+
+  Future<void> _loadParties() async {
+    setState(() {
+      _isLoading = true; // Set loading to true before fetching
+    });
+    try {
+      final AppLocalizations localizations = AppLocalizations.of(context);
+
+      // Map "All" localized string back to null for database query
+      String? queryPartyType;
+      if (_currentSelectedPartyTypeFilter != localizations.allTypes) {
+        queryPartyType = _currentSelectedPartyTypeFilter;
+      }
+      else {
+        queryPartyType = null;
+      }
+      // If the localized 'All' is picked, pass null for type filtering
+
+      final String? querySearchText = _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null;
+
+      _parties = await widget.dbHelper.getParties(
+        partyType: queryPartyType,
+        searchText: querySearchText,
+      );
+
+    } catch (e) {
+      print('Error loading parties: $e');
+      // Optionally show a SnackBar or an error message
+    } finally {
+      setState(() {
+        _isLoading = false; // Set loading to false after fetching
+      });
+    }
+  }
+
+  // NEW: Reset filters method
+  void _resetFilters() {
+    final localizations = AppLocalizations.of(context);
+    setState(() {
+      _searchController.clear();
+      _currentSelectedPartyTypeFilter = localizations.allTypes;
+      // Re-initialize _availablePartyTypes in case the list of types changes
+      // This might not be strictly necessary with `getDistinctPartyTypes` but harmless.
+      _loadAvailablePartyTypesAndParties(); // This will reload everything
+    });
+    // No need to call _loadParties directly as _loadAvailablePartyTypesAndParties does it.
   }
 
   Future<void> _addOrUpdateParty({Party? partyToEdit}) async {
@@ -68,7 +138,7 @@ class _PartyManagementScreenState extends State<PartyManagementScreen> {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
-        final localizations = AppLocalizations.of(context);
+        final localizations = AppLocalizations.of(context); // Ensured non-null
         return StatefulBuilder( // Use StatefulBuilder for dropdown to rebuild
           builder: (context, setStateInDialog) {
             return AlertDialog(
@@ -100,7 +170,7 @@ class _PartyManagementScreenState extends State<PartyManagementScreen> {
                           _selectedPartyType = newValue;
                         });
                       },
-                      validator: (value) => value == null ? 'Please select a party type.' : null,
+                      validator: (value) => value == null ? localizations.partyTypeEmptyValidation : null, // Localized
                     ),
                     const SizedBox(height: 10),
                     TextField(
@@ -131,7 +201,7 @@ class _PartyManagementScreenState extends State<PartyManagementScreen> {
                   onPressed: () async {
                     if (_nameController.text.isEmpty || _selectedPartyType == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Party name and type cannot be empty.')), // Consider localizing this message
+                        SnackBar(content: Text(localizations.partyNameTypeEmptyValidation)), // Localized
                       );
                       return;
                     }
@@ -163,7 +233,7 @@ class _PartyManagementScreenState extends State<PartyManagementScreen> {
                       await widget.dbHelper.updateParty(updatedParty);
                     }
                     Navigator.of(context).pop();
-                    _loadParties(); // Refresh list
+                    _loadParties(); // Refresh list after add/update
                   },
                   child: Text(localizations.saveButton),
                 ),
@@ -176,13 +246,13 @@ class _PartyManagementScreenState extends State<PartyManagementScreen> {
   }
 
   Future<void> _deleteParty(int partyId) async {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context); // Ensured non-null
     bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(localizations.deleteButton),
-          content: Text('Are you sure you want to delete this party?'), // Localize this
+          content: Text(localizations.confirmDeleteParty), // Localized
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
@@ -207,59 +277,111 @@ class _PartyManagementScreenState extends State<PartyManagementScreen> {
     }
   }
 
-  String? getPartyTypeLocalization(AppLocalizations localizations, String partyType) {
+  String getPartyTypeLocalization(AppLocalizations localizations, String partyType) {
+    // This method now also handles the 'All' type for consistency
+    if (partyType == 'All') return localizations.allTypes; // 'All' is handled by localization
+
     final partyTypeLocalization = {
       'Investor': localizations.partyTypeInvestor,
       'Farmer': localizations.partyTypeFarmer,
       'Customer': localizations.partyTypeCustomer,
       'Other Vendor': localizations.partyTypeOtherVendor,
     };
-    return partyTypeLocalization[partyType];
+
+    return partyTypeLocalization[partyType] ?? partyType;
   }
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context); // Ensured non-null
 
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.partyManagementTitle),
-        actions: [
-          // Filter dropdown
-          DropdownButton<String>(
-            value: _selectedPartyTypeFilter,
-            items: [
-              DropdownMenuItem(value: 'All', child: Text('All')), // Localize this
-              DropdownMenuItem(value: 'Investor', child: Text(localizations.partyTypeInvestor)),
-              DropdownMenuItem(value: 'Farmer', child: Text(localizations.partyTypeFarmer)),
-              DropdownMenuItem(value: 'Customer', child: Text(localizations.partyTypeCustomer)),
-              DropdownMenuItem(value: 'Other Vendor', child: Text(localizations.partyTypeOtherVendor)),
-            ],
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                setState(() {
-                  _selectedPartyTypeFilter = newValue;
-                });
-                _loadParties(); // Reload parties based on new filter
-              }
-            },
-            dropdownColor: Theme.of(context).primaryColor, // Match app bar color
-            style: const TextStyle(color: Colors.white),
-            underline: const SizedBox(), // Remove default underline
-            iconEnabledColor: Colors.white, // Color of the dropdown arrow
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(110.0), // Adjust height for filters
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    labelText: localizations.searchParty,
+                    hintText: localizations.searchPartyHint,
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                        _loadParties(); // Reload after clearing
+                      },
+                    )
+                        : null,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  onChanged: (value) {
+                    // Implement a debounce if search is too frequent, or just call _loadParties immediately
+                    // For simplicity, calling immediately. Consider debounce for large datasets.
+                    _loadParties();
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: _currentSelectedPartyTypeFilter,
+                        decoration: InputDecoration(
+                          labelText: localizations.partyType, // Re-using from previous suggestion
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        ),
+                        items: _availablePartyTypes.map((type) {
+                          return DropdownMenuItem<String>(
+                            value: type,
+                            child: Text(getPartyTypeLocalization(localizations, type)!), // Use localization helper
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              _currentSelectedPartyTypeFilter = newValue;
+                            });
+                            _loadParties(); // Reload parties based on new filter
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    ElevatedButton.icon(
+                      onPressed: _resetFilters,
+                      icon: const Icon(Icons.refresh),
+                      label: Text(localizations.resetFilters),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          const SizedBox(width: 16), // Padding for the dropdown
-        ],
+        ),
       ),
-      body: _parties.isEmpty
+      body: _isLoading // Use the _isLoading state
+          ? const Center(child: CircularProgressIndicator())
+          : _parties.isEmpty
           ? Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              _selectedPartyTypeFilter == 'All'
-                  ? localizations.noPartiesFoundMessage // Localize this
-                  : localizations.noFilteredPartiesFoundMessage, // Localize this
+              _currentSelectedPartyTypeFilter == localizations.allTypes && _searchController.text.isEmpty
+                  ? localizations.noPartiesFoundMessage // Original no parties message when no filters applied
+                  : localizations.noFilteredPartiesFoundMessage, // Message for filtered results
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -313,13 +435,13 @@ class _PartyManagementScreenState extends State<PartyManagementScreen> {
           );
         },
       ),
-      floatingActionButton: _parties.isNotEmpty
+      floatingActionButton: _parties.isNotEmpty || (_searchController.text.isNotEmpty || _currentSelectedPartyTypeFilter != localizations.allTypes) // Show FAB even if filtered list is empty, but only if there are parties in general
           ? FloatingActionButton.extended(
         onPressed: () => _addOrUpdateParty(),
         label: Text(localizations.addPartyButton),
         icon: const Icon(Icons.person_add),
       )
-          : null, // FAB is only shown if parties exist
+          : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

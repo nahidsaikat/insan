@@ -729,4 +729,28 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get date => 'তারিখ';
+
+  @override
+  String get searchParty => 'পার্টি খুঁজুন';
+
+  @override
+  String get searchPartyHint => 'নাম বা ফোন নম্বর লিখুন...';
+
+  @override
+  String get allTypes => 'সব প্রকার';
+
+  @override
+  String get partyType => 'পার্টির প্রকার';
+
+  @override
+  String get confirmDeleteParty =>
+      'আপনি কি নিশ্চিত এই পার্টিটি মুছে ফেলতে চান?';
+
+  @override
+  String get partyTypeEmptyValidation =>
+      'অনুগ্রহ করে একটি পার্টির প্রকার নির্বাচন করুন।';
+
+  @override
+  String get partyNameTypeEmptyValidation =>
+      'পার্টির নাম এবং প্রকার খালি থাকতে পারে না।';
 }

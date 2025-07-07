@@ -227,5 +227,12 @@
   "resetFilters": "Reset Filters",
   "code": "Code",
   "weight": "Weight",
-  "date": "Date"
+  "date": "Date",
+  "searchParty": "Search Party",
+  "searchPartyHint": "Enter name or phone number...",
+  "allTypes": "All Types",
+  "partyType": "Party Type",
+  "confirmDeleteParty": "Are you sure you want to delete this party?",
+  "partyTypeEmptyValidation": "Please select a party type.",
+  "partyNameTypeEmptyValidation": "Party name and type cannot be empty."
 }

@@ -257,12 +257,50 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<Party>> getParties() async {
+  Future<List<Party>> getParties({
+    String? partyType,
+    String? searchText, // For searching by party name
+  }) async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('Parties', orderBy: 'name ASC');
+    List<String> whereClauses = [];
+    List<dynamic> whereArgs = [];
+
+    if (partyType != null && partyType.isNotEmpty) {
+      whereClauses.add('type = ?');
+      whereArgs.add(partyType);
+    }
+    if (searchText != null && searchText.isNotEmpty) {
+      // Search by name (and potentially phone if you want)
+      whereClauses.add('(name LIKE ? OR phoneNumber LIKE ?)'); // Added phoneNumber for broader search
+      whereArgs.add('%$searchText%');
+      whereArgs.add('%$searchText%');
+    }
+
+    final String whereString = whereClauses.isEmpty ? '' : 'WHERE ${whereClauses.join(' AND ')}';
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+      'SELECT * FROM parties $whereString ORDER BY name ASC', // Order by name for consistency
+      whereArgs,
+    );
+
     return List.generate(maps.length, (i) {
       return Party.fromMap(maps[i]);
     });
+  }
+
+  // You might also need a method to get all distinct party types for dropdowns
+  Future<List<String>> getDistinctPartyTypes() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'parties',
+      columns: ['DISTINCT type'],
+      where: 'type IS NOT NULL AND type != ""',
+    );
+    // Add default types if none exist in DB yet
+    Set<String> types = maps.map((map) => map['type'] as String).toSet();
+    // Ensure common types are always available, even if no parties of that type exist yet
+    types.addAll(['Buyer', 'Seller', 'Other']); // Adjust based on your actual party types
+    return types.toList()..sort(); // Sort for consistent display
   }
 
   Future<List<Party>> getPartiesByType(String type) async {
