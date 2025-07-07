@@ -8,6 +8,7 @@ import './l10n/app_localizations.dart';
 import './screens/season_management_screen.dart';
 import './screens/dashboard_screen.dart';
 import './providers/theme_provider.dart';
+import './providers/settings_provider.dart';
 
 // Your existing main function (if any)
 void main() async {
@@ -17,7 +18,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()), // Provide ThemeProvider
-        // Add other providers here if you have them, e.g., for user preferences later
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
       ],
       child: const MyApp(),
     ),

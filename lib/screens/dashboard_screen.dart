@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:insan/screens/reports_screen.dart';
-import 'package:insan/screens/sale_screen.dart';
 import '../screens/profit_distribution_screen.dart';
 import '../database/database_helper.dart';
 import '../models/season.dart';
@@ -13,6 +11,10 @@ import '../screens/purchase_sale_screen.dart';
 import '../screens/expense_investment_screen.dart';
 import '../screens/party_management_screen.dart';
 import '../screens/inventory_locations_screen.dart';
+import '../screens/reports_screen.dart';
+import '../screens/sale_screen.dart';
+
+import '../screens/settings_screen.dart';
 
 
 class DashboardScreen extends StatefulWidget {
@@ -112,6 +114,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               '${localizations.activeSeasonLabel} ${widget.activeSeason.name}',
               style: const TextStyle(color: Colors.white),
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: localizations.settingsTitle, // Localized tooltip
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
+            },
           ),
         ],
       ),

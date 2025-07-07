@@ -234,5 +234,8 @@
   "partyType": "Party Type",
   "confirmDeleteParty": "Are you sure you want to delete this party?",
   "partyTypeEmptyValidation": "Please select a party type.",
-  "partyNameTypeEmptyValidation": "Party name and type cannot be empty."
+  "partyNameTypeEmptyValidation": "Party name and type cannot be empty.",
+  "darkMode": "Dark Mode",
+  "currencySymbol": "Currency Symbol",
+  "dateFormat": "Date Format"
 }

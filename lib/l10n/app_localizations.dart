@@ -1507,6 +1507,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Party name and type cannot be empty.'**
   String get partyNameTypeEmptyValidation;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @currencySymbol.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency Symbol'**
+  String get currencySymbol;
+
+  /// No description provided for @dateFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Format'**
+  String get dateFormat;
 }
 
 class _AppLocalizationsDelegate

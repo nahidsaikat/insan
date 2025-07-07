@@ -234,5 +234,8 @@
   "partyType": "পার্টির প্রকার",
   "confirmDeleteParty": "আপনি কি নিশ্চিত এই পার্টিটি মুছে ফেলতে চান?",
   "partyTypeEmptyValidation": "অনুগ্রহ করে একটি পার্টির প্রকার নির্বাচন করুন।",
-  "partyNameTypeEmptyValidation": "পার্টির নাম এবং প্রকার খালি থাকতে পারে না।"
+  "partyNameTypeEmptyValidation": "পার্টির নাম এবং প্রকার খালি থাকতে পারে না।",
+  "darkMode": "Dark Mode",
+  "currencySymbol": "Currency Symbol",
+  "dateFormat": "Date Format"
 }

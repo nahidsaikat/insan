@@ -753,4 +753,13 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get partyNameTypeEmptyValidation =>
       'পার্টির নাম এবং প্রকার খালি থাকতে পারে না।';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get currencySymbol => 'Currency Symbol';
+
+  @override
+  String get dateFormat => 'Date Format';
 }

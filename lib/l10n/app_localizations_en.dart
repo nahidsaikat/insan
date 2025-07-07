@@ -745,4 +745,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get partyNameTypeEmptyValidation =>
       'Party name and type cannot be empty.';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get currencySymbol => 'Currency Symbol';
+
+  @override
+  String get dateFormat => 'Date Format';
 }
