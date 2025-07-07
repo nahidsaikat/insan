@@ -655,4 +655,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notApplicable => 'N/A';
+
+  @override
+  String get currentInventoryValue => 'Current Inventory Value:';
+
+  @override
+  String get profitTrendBySeason => 'Profit/Loss Trend by Season';
+
+  @override
+  String get inventoryStatusBreakdown => 'Inventory Status Breakdown';
+
+  @override
+  String get inStockShort => 'In Stock';
+
+  @override
+  String get soldShort => 'Sold';
+
+  @override
+  String get discardedShort => 'Discarded';
+
+  @override
+  String get activeSeason => 'Active Season';
+
+  @override
+  String get manageSeasons => 'Manage Seasons';
+
+  @override
+  String get noProfitDataAvailable => 'No profit data available for charts.';
+
+  @override
+  String get noInventoryDataForCharts =>
+      'No inventory data available for charts.';
+
+  @override
+  String get searchSacks => 'Search Sacks';
+
+  @override
+  String get searchSacksHint => 'Enter code, type, or notes...';
+
+  @override
+  String get allProducts => 'All Products';
+
+  @override
+  String get allStatuses => 'All Statuses';
+
+  @override
+  String get allLocations => 'All Locations';
+
+  @override
+  String get productType => 'Product Type';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get resetFilters => 'Reset Filters';
+
+  @override
+  String get code => 'Code';
+
+  @override
+  String get weight => 'Weight';
+
+  @override
+  String get date => 'Date';
 }

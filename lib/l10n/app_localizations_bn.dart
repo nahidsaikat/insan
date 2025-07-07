@@ -661,4 +661,72 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get notApplicable => 'প্রযোজ্য নয়';
+
+  @override
+  String get currentInventoryValue => 'বর্তমান ইনভেন্টরি মূল্য:';
+
+  @override
+  String get profitTrendBySeason => 'সিজন অনুযায়ী লাভ/ক্ষতির প্রবণতা';
+
+  @override
+  String get inventoryStatusBreakdown => 'ইনভেন্টরি অবস্থার বিভাজন';
+
+  @override
+  String get inStockShort => 'স্টকে আছে';
+
+  @override
+  String get soldShort => 'বিক্রি হয়েছে';
+
+  @override
+  String get discardedShort => 'বাদ দেওয়া হয়েছে';
+
+  @override
+  String get activeSeason => 'সক্রিয় সিজন';
+
+  @override
+  String get manageSeasons => 'সিজন পরিচালনা করুন';
+
+  @override
+  String get noProfitDataAvailable =>
+      'চার্টের জন্য কোনো লাভের ডেটা উপলব্ধ নেই।';
+
+  @override
+  String get noInventoryDataForCharts =>
+      'চার্টের জন্য কোনো ইনভেন্টরি ডেটা উপলব্ধ নেই।';
+
+  @override
+  String get searchSacks => 'বস্তা খুঁজুন';
+
+  @override
+  String get searchSacksHint => 'কোড, প্রকার বা নোট লিখুন...';
+
+  @override
+  String get allProducts => 'সব প্রকার';
+
+  @override
+  String get allStatuses => 'সব অবস্থা';
+
+  @override
+  String get allLocations => 'সব অবস্থান';
+
+  @override
+  String get productType => 'পণ্যের প্রকার';
+
+  @override
+  String get status => 'অবস্থা';
+
+  @override
+  String get location => 'অবস্থান';
+
+  @override
+  String get resetFilters => 'ফিল্টার রিসেট করুন';
+
+  @override
+  String get code => 'কোড';
+
+  @override
+  String get weight => 'ওজন';
+
+  @override
+  String get date => 'তারিখ';
 }

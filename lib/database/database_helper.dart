@@ -379,7 +379,10 @@ class DatabaseHelper {
 
   Future<List<InventoryLocation>> getInventoryLocations() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('InventoryLocations', orderBy: 'name ASC');
+    final List<Map<String, dynamic>> maps = await db.query(
+        'InventoryLocations',
+        orderBy: 'name ASC'
+    );
     return List.generate(maps.length, (i) {
       return InventoryLocation.fromMap(maps[i]);
     });
@@ -480,6 +483,77 @@ class DatabaseHelper {
       WHERE seasonId = ? AND status = 'In Stock'
     ''', [seasonId]);
     return (result.first['totalValue'] as double?) ?? 0.0;
+  }
+
+  Future<int> getTotalSacksForSeason(int seasonId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> result = await db.rawQuery('''
+    SELECT COUNT(sackId) as totalSacks
+    FROM sacks
+    WHERE seasonId = ?
+  ''', [seasonId]);
+    return (result.first['totalSacks'] as int?) ?? 0;
+  }
+
+  Future<List<Sack>> getSacksForSeason(
+      int seasonId, {
+        String? productType,
+        String? status,
+        int? locationId,
+        String? searchText, // For a general text search across relevant fields
+      }) async {
+    final db = await database;
+    List<String> whereClauses = ['seasonId = ?'];
+    List<dynamic> whereArgs = [seasonId];
+
+    if (productType != null && productType.isNotEmpty) {
+      whereClauses.add('productType = ?');
+      whereArgs.add(productType);
+    }
+    if (status != null && status.isNotEmpty) {
+      whereClauses.add('status = ?');
+      whereArgs.add(status);
+    }
+    if (locationId != null) {
+      whereClauses.add('locationId = ?');
+      whereArgs.add(locationId);
+    }
+    if (searchText != null && searchText.isNotEmpty) {
+      // Add a LIKE clause for search. Adjust fields as needed.
+      // Example: searching in purchaseCode, productType, or notes
+      whereClauses.add('(purchaseCode LIKE ? OR productType LIKE ? OR notes LIKE ?)');
+      whereArgs.add('%$searchText%');
+      whereArgs.add('%$searchText%');
+      whereArgs.add('%$searchText%');
+    }
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'sacks',
+      where: whereClauses.join(' AND '),
+      whereArgs: whereArgs,
+      orderBy: 'purchaseDate DESC', // Optional: order by date for better display
+    );
+
+    return List.generate(maps.length, (i) {
+      return Sack.fromMap(maps[i]);
+    });
+  }
+
+  // You might also need a method to get all distinct product types and statuses for dropdowns
+  Future<List<String>> getDistinctProductTypes(int seasonId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'sacks',
+      columns: ['DISTINCT productType'],
+      where: 'seasonId = ? AND productType IS NOT NULL AND productType != ""',
+      whereArgs: [seasonId],
+    );
+    return maps.map((map) => map['productType'] as String).toList();
+  }
+
+  Future<List<String>> getDistinctSackStatuses() async {
+    // These are usually fixed, but fetching from DB ensures consistency
+    return ['In Stock', 'Sold', 'Discarded']; // Or fetch from a status table if you have one
   }
 
   Future<String> generateUniqueSackIdentifier(int vendorId, int seasonId) async {

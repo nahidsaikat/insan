@@ -1333,6 +1333,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'N/A'**
   String get notApplicable;
+
+  /// No description provided for @currentInventoryValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Inventory Value:'**
+  String get currentInventoryValue;
+
+  /// No description provided for @profitTrendBySeason.
+  ///
+  /// In en, this message translates to:
+  /// **'Profit/Loss Trend by Season'**
+  String get profitTrendBySeason;
+
+  /// No description provided for @inventoryStatusBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory Status Breakdown'**
+  String get inventoryStatusBreakdown;
+
+  /// No description provided for @inStockShort.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get inStockShort;
+
+  /// No description provided for @soldShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold'**
+  String get soldShort;
+
+  /// No description provided for @discardedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Discarded'**
+  String get discardedShort;
+
+  /// No description provided for @activeSeason.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Season'**
+  String get activeSeason;
+
+  /// No description provided for @manageSeasons.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Seasons'**
+  String get manageSeasons;
+
+  /// No description provided for @noProfitDataAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No profit data available for charts.'**
+  String get noProfitDataAvailable;
+
+  /// No description provided for @noInventoryDataForCharts.
+  ///
+  /// In en, this message translates to:
+  /// **'No inventory data available for charts.'**
+  String get noInventoryDataForCharts;
+
+  /// No description provided for @searchSacks.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Sacks'**
+  String get searchSacks;
+
+  /// No description provided for @searchSacksHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter code, type, or notes...'**
+  String get searchSacksHint;
+
+  /// No description provided for @allProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'All Products'**
+  String get allProducts;
+
+  /// No description provided for @allStatuses.
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get allStatuses;
+
+  /// No description provided for @allLocations.
+  ///
+  /// In en, this message translates to:
+  /// **'All Locations'**
+  String get allLocations;
+
+  /// No description provided for @productType.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Type'**
+  String get productType;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @resetFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Filters'**
+  String get resetFilters;
+
+  /// No description provided for @code.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get code;
+
+  /// No description provided for @weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weight;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
 }
 
 class _AppLocalizationsDelegate

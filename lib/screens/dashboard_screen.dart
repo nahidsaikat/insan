@@ -246,7 +246,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => InventoryScreen(
                       dbHelper: widget.dbHelper,
-                      activeSeason: widget.activeSeason,
+                      activeSeasonId: widget.activeSeason.seasonId!,
                     ),
                   )).then((_) => _loadDashboardData()); // Reload on return
                 },
