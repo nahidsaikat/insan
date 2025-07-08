@@ -240,5 +240,9 @@
   "dateFormat": "Date Format",
   "overviewTitle": "সারসংক্ষেপ",
   "managementTitle": "ব্যবস্থাপনা",
-  "reportingTitle": "রিপোর্টিং"
+  "reportingTitle": "রিপোর্টিং",
+  "totalKgPurchased": "মোট ক্রয়কৃত কেজি",
+  "totalKgSold": "মোট বিক্রিত কেজি",
+  "sacksLabel": "বস্তা",
+  "kgLabel": "কেজি"
 }

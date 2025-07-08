@@ -763,4 +763,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportingTitle => 'Reporting';
+
+  @override
+  String get totalKgPurchased => 'Total Kg Purchased';
+
+  @override
+  String get totalKgSold => 'Total Kg Sold';
+
+  @override
+  String get sacksLabel => 'Sacks';
+
+  @override
+  String get kgLabel => 'Kg';
 }

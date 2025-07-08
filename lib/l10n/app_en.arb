@@ -240,5 +240,9 @@
   "dateFormat": "Date Format",
   "overviewTitle": "Overview",
   "managementTitle": "Management",
-  "reportingTitle": "Reporting"
+  "reportingTitle": "Reporting",
+  "totalKgPurchased": "Total Kg Purchased",
+  "totalKgSold": "Total Kg Sold",
+  "sacksLabel": "Sacks",
+  "kgLabel": "Kg"
 }

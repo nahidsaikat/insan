@@ -771,4 +771,16 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get reportingTitle => 'রিপোর্টিং';
+
+  @override
+  String get totalKgPurchased => 'মোট ক্রয়কৃত কেজি';
+
+  @override
+  String get totalKgSold => 'মোট বিক্রিত কেজি';
+
+  @override
+  String get sacksLabel => 'বস্তা';
+
+  @override
+  String get kgLabel => 'কেজি';
 }

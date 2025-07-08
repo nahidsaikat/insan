@@ -1543,6 +1543,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reporting'**
   String get reportingTitle;
+
+  /// No description provided for @totalKgPurchased.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Kg Purchased'**
+  String get totalKgPurchased;
+
+  /// No description provided for @totalKgSold.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Kg Sold'**
+  String get totalKgSold;
+
+  /// No description provided for @sacksLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sacks'**
+  String get sacksLabel;
+
+  /// No description provided for @kgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Kg'**
+  String get kgLabel;
 }
 
 class _AppLocalizationsDelegate
