@@ -754,4 +754,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dateFormat => 'Date Format';
+
+  @override
+  String get overviewTitle => 'Overview';
+
+  @override
+  String get managementTitle => 'Management';
+
+  @override
+  String get reportingTitle => 'Reporting';
 }

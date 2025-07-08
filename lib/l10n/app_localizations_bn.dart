@@ -762,4 +762,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get dateFormat => 'Date Format';
+
+  @override
+  String get overviewTitle => 'সারসংক্ষেপ';
+
+  @override
+  String get managementTitle => 'ব্যবস্থাপনা';
+
+  @override
+  String get reportingTitle => 'রিপোর্টিং';
 }

@@ -237,5 +237,8 @@
   "partyNameTypeEmptyValidation": "পার্টির নাম এবং প্রকার খালি থাকতে পারে না।",
   "darkMode": "Dark Mode",
   "currencySymbol": "Currency Symbol",
-  "dateFormat": "Date Format"
+  "dateFormat": "Date Format",
+  "overviewTitle": "সারসংক্ষেপ",
+  "managementTitle": "ব্যবস্থাপনা",
+  "reportingTitle": "রিপোর্টিং"
 }

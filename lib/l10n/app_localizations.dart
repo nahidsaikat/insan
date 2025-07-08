@@ -1525,6 +1525,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Date Format'**
   String get dateFormat;
+
+  /// No description provided for @overviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overviewTitle;
+
+  /// No description provided for @managementTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Management'**
+  String get managementTitle;
+
+  /// No description provided for @reportingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reporting'**
+  String get reportingTitle;
 }
 
 class _AppLocalizationsDelegate

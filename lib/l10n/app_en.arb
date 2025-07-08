@@ -237,5 +237,8 @@
   "partyNameTypeEmptyValidation": "Party name and type cannot be empty.",
   "darkMode": "Dark Mode",
   "currencySymbol": "Currency Symbol",
-  "dateFormat": "Date Format"
+  "dateFormat": "Date Format",
+  "overviewTitle": "Overview",
+  "managementTitle": "Management",
+  "reportingTitle": "Reporting"
 }
