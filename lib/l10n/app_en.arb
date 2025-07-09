@@ -244,5 +244,9 @@
   "totalKgPurchased": "Total Kg Purchased",
   "totalKgSold": "Total Kg Sold",
   "sacksLabel": "Sacks",
-  "kgLabel": "Kg"
+  "kgLabel": "Kg",
+  "totalSacksInLocation": "Total Sacks",
+  "totalQuantityInLocation": "Total Quantity",
+  "locationNameEmptyError": "Location name cannot be empty.",
+  "cannotDeleteLocationWithSacks": "Cannot delete location with sacks in it. Please move sacks first."
 }

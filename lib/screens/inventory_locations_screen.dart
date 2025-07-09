@@ -3,6 +3,13 @@ import '../database/database_helper.dart';
 import '../models/inventory_location.dart';
 import '../l10n/app_localizations.dart';
 
+class _LocationInventorySummary {
+  final int totalSacks;
+  final double totalWeightKg;
+
+  _LocationInventorySummary({this.totalSacks = 0, this.totalWeightKg = 0.0});
+}
+
 class InventoryLocationsScreen extends StatefulWidget {
   final DatabaseHelper dbHelper;
 
@@ -17,6 +24,7 @@ class InventoryLocationsScreen extends StatefulWidget {
 
 class _InventoryLocationsScreenState extends State<InventoryLocationsScreen> {
   List<InventoryLocation> _locations = [];
+  Map<int, _LocationInventorySummary> _locationSummaries = {};
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
@@ -38,8 +46,21 @@ class _InventoryLocationsScreenState extends State<InventoryLocationsScreen> {
 
   Future<void> _loadLocations() async {
     final locations = await widget.dbHelper.getInventoryLocations();
+    final Map<int, _LocationInventorySummary> summaries = {};
+
+    for (var location in locations) {
+      if (location.locationId != null) {
+        final summaryData = await widget.dbHelper.getInventorySummaryForLocation(location.locationId!);
+        summaries[location.locationId!] = _LocationInventorySummary(
+          totalSacks: summaryData['totalSacks'] as int,
+          totalWeightKg: summaryData['totalWeightKg'] as double,
+        );
+      }
+    }
+
     setState(() {
       _locations = locations;
+      _locationSummaries = summaries;
     });
   }
 
@@ -210,6 +231,8 @@ class _InventoryLocationsScreenState extends State<InventoryLocationsScreen> {
         itemCount: _locations.length,
         itemBuilder: (context, index) {
           final location = _locations[index];
+          final summary = _locationSummaries[location.locationId!] ?? _LocationInventorySummary();
+
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             elevation: 2,
@@ -225,6 +248,8 @@ class _InventoryLocationsScreenState extends State<InventoryLocationsScreen> {
                     Text('${localizations.locationAddressHint}: ${location.address}'),
                   if (location.rentCostPerMonth != null)
                     Text('${localizations.locationRentCostHint}: ৳ ${location.rentCostPerMonth!.toStringAsFixed(2)}'),
+                  Text('${localizations.totalSacksInLocation}: ${summary.totalSacks}'),
+                  Text('${localizations.totalQuantityInLocation}: ${summary.totalWeightKg.toStringAsFixed(2)} ${localizations.kgLabel}'),
                 ],
               ),
               trailing: Row(

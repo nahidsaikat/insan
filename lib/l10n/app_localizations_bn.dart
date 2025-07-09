@@ -783,4 +783,17 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get kgLabel => 'কেজি';
+
+  @override
+  String get totalSacksInLocation => 'মোট বস্তা';
+
+  @override
+  String get totalQuantityInLocation => 'মোট পরিমাণ';
+
+  @override
+  String get locationNameEmptyError => 'অবস্থানের নাম খালি রাখা যাবে না।';
+
+  @override
+  String get cannotDeleteLocationWithSacks =>
+      'অবস্থানে বস্তা থাকাকালীন মুছে ফেলা যাবে না। প্রথমে বস্তা সরান।';
 }

@@ -113,7 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = AppLocalizations.of(context);
 
     // --- Define Dashboard Action Items (unchanged) ---
     final List<DashboardActionItem> transactionActions = [

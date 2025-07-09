@@ -1567,6 +1567,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Kg'**
   String get kgLabel;
+
+  /// No description provided for @totalSacksInLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Sacks'**
+  String get totalSacksInLocation;
+
+  /// No description provided for @totalQuantityInLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Quantity'**
+  String get totalQuantityInLocation;
+
+  /// No description provided for @locationNameEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Location name cannot be empty.'**
+  String get locationNameEmptyError;
+
+  /// No description provided for @cannotDeleteLocationWithSacks.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot delete location with sacks in it. Please move sacks first.'**
+  String get cannotDeleteLocationWithSacks;
 }
 
 class _AppLocalizationsDelegate

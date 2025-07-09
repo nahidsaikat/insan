@@ -461,6 +461,25 @@ class DatabaseHelper {
     );
   }
 
+  Future<Map<String, dynamic>> getInventorySummaryForLocation(int locationId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> result = await db.rawQuery('''
+      SELECT
+        COUNT(sackId) AS totalSacks,
+        SUM(purchaseWeightKg) AS totalWeightKg
+      FROM sacks
+      WHERE currentLocationId = ? AND status = 'In Stock'
+    ''', [locationId]);
+
+    if (result.isNotEmpty && result.first['totalSacks'] != null) {
+      return {
+        'totalSacks': result.first['totalSacks'] as int,
+        'totalWeightKg': (result.first['totalWeightKg'] as num?)?.toDouble() ?? 0.0,
+      };
+    }
+    return {'totalSacks': 0, 'totalWeightKg': 0.0}; // Return default if no data
+  }
+
   // --- Sacks CRUD Operations ---
 
   // Helper to get the last sequential number for a given vendor and season

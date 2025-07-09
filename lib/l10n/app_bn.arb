@@ -244,5 +244,9 @@
   "totalKgPurchased": "মোট ক্রয়কৃত কেজি",
   "totalKgSold": "মোট বিক্রিত কেজি",
   "sacksLabel": "বস্তা",
-  "kgLabel": "কেজি"
+  "kgLabel": "কেজি",
+  "totalSacksInLocation": "মোট বস্তা",
+  "totalQuantityInLocation": "মোট পরিমাণ",
+  "locationNameEmptyError": "অবস্থানের নাম খালি রাখা যাবে না।",
+  "cannotDeleteLocationWithSacks": "অবস্থানে বস্তা থাকাকালীন মুছে ফেলা যাবে না। প্রথমে বস্তা সরান।"
 }

@@ -775,4 +775,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kgLabel => 'Kg';
+
+  @override
+  String get totalSacksInLocation => 'Total Sacks';
+
+  @override
+  String get totalQuantityInLocation => 'Total Quantity';
+
+  @override
+  String get locationNameEmptyError => 'Location name cannot be empty.';
+
+  @override
+  String get cannotDeleteLocationWithSacks =>
+      'Cannot delete location with sacks in it. Please move sacks first.';
 }
