@@ -49,12 +49,12 @@ class DatabaseHelper {
         isActive INTEGER DEFAULT 0
       )
     ''');
-    await db.insert('seasons', {
-      'name': 'Default Season',
-      'code': 'DEF001',
-      'startDate': DateTime.now().toIso8601String(),
-      'isActive': 1
-    });
+    // await db.insert('seasons', {
+    //   'name': 'Default Season',
+    //   'code': 'DEF001',
+    //   'startDate': DateTime.now().toIso8601String(),
+    //   'isActive': 1
+    // });
 
     await db.execute('''
       CREATE TABLE Parties (

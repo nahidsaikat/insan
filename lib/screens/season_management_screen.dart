@@ -253,17 +253,20 @@ class _SeasonManagementScreenState extends State<SeasonManagementScreen> {
       ),
       body: _seasons.isEmpty
           ? Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(AppLocalizations.of(context).noActiveSeasonMessage),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () => _addOrUpdateSeason(),
-              icon: const Icon(Icons.add),
-              label: Text(AppLocalizations.of(context).createSeasonButton),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(AppLocalizations.of(context).noActiveSeasonMessage),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () => _addOrUpdateSeason(),
+                icon: const Icon(Icons.add),
+                label: Text(AppLocalizations.of(context).createSeasonButton),
+              ),
+            ],
+          ),
         ),
       )
           : ListView.builder(
