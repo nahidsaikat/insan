@@ -755,13 +755,13 @@ class AppLocalizationsBn extends AppLocalizations {
       'পার্টির নাম এবং প্রকার খালি থাকতে পারে না।';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'ডার্ক মোড';
 
   @override
-  String get currencySymbol => 'Currency Symbol';
+  String get currencySymbol => 'মুদ্রা প্রতীক';
 
   @override
-  String get dateFormat => 'Date Format';
+  String get dateFormat => 'তারিখের বিন্যাস';
 
   @override
   String get overviewTitle => 'সারসংক্ষেপ';
