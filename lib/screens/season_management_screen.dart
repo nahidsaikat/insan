@@ -47,6 +47,42 @@ class _SeasonManagementScreenState extends State<SeasonManagementScreen> {
     });
   }
 
+  Future<void> _toggleSeasonActive(Season season) async {
+    final localizations = AppLocalizations.of(context); // Get localization instance
+
+    final updatedSeason = season.copyWith(
+      isActive: !season.isActive,
+      endDate: !season.isActive ? DateTime.now() : null, // Set end date if deactivating
+    );
+    await widget.dbHelper.updateSeason(updatedSeason);
+    await _loadSeasons(); // Reload the list to reflect changes
+
+    if (updatedSeason.isActive) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(localizations?.seasonActivatedSuccess ?? 'Season set as active.')),
+        );
+        // *** IMPORTANT FOR NAVIGATION BACK TO DASHBOARD ***
+        // 1. Notify the parent (MyApp) that a season is now active.
+        widget.onSeasonSelected(updatedSeason);
+        // 2. Pop this screen to return to MyApp's 'home' widget.
+        // MyApp's build method will then re-evaluate and show the Dashboard.
+        Navigator.of(context).pop();
+      }
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(localizations?.seasonDeactivatedSuccess ?? 'Season set as inactive.')),
+        );
+        // If a season is deactivated from here, and it's the current active one,
+        // the SettingsScreen flow (onSeasonChanged(null)) is generally used.
+        // If this only deactivates a *non-active* season, no parent notification is needed.
+        // If it *was* the active season and deactivated from here, you would typically
+        // still pop and MyApp would re-render SeasonManagementScreen.
+      }
+    }
+  }
+
   Future<void> _addOrUpdateSeason({Season? seasonToEdit}) async {
     // Clear controllers if adding new, or pre-fill if editing
     if (seasonToEdit == null) {

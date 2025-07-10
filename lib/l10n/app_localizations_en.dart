@@ -788,4 +788,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get cannotDeleteLocationWithSacks =>
       'Cannot delete location with sacks in it. Please move sacks first.';
+
+  @override
+  String get currentActiveSeason => 'Current Active Season';
+
+  @override
+  String get deactivateCurrentSeason => 'Deactivate Current Season';
+
+  @override
+  String get deactivateSeasonSubtitle =>
+      'Mark the currently active season as inactive. This will take you to the season list.';
+
+  @override
+  String get deactivateSeasonConfirmTitle => 'Confirm Deactivation';
+
+  @override
+  String get deactivateSeasonConfirmMessage =>
+      'Are you sure you want to deactivate the current season? This action cannot be undone for the current session.';
+
+  @override
+  String get deactivateButton => 'Deactivate';
+
+  @override
+  String get seasonDeactivatedSuccess =>
+      'Current season successfully deactivated.';
+
+  @override
+  String get seasonActivatedSuccess => 'Current season successfully activated.';
 }

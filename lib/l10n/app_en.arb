@@ -248,5 +248,13 @@
   "totalSacksInLocation": "Total Sacks",
   "totalQuantityInLocation": "Total Quantity",
   "locationNameEmptyError": "Location name cannot be empty.",
-  "cannotDeleteLocationWithSacks": "Cannot delete location with sacks in it. Please move sacks first."
+  "cannotDeleteLocationWithSacks": "Cannot delete location with sacks in it. Please move sacks first.",
+  "currentActiveSeason": "Current Active Season",
+  "deactivateCurrentSeason": "Deactivate Current Season",
+  "deactivateSeasonSubtitle": "Mark the currently active season as inactive. This will take you to the season list.",
+  "deactivateSeasonConfirmTitle": "Confirm Deactivation",
+  "deactivateSeasonConfirmMessage": "Are you sure you want to deactivate the current season? This action cannot be undone for the current session.",
+  "deactivateButton": "Deactivate",
+  "seasonDeactivatedSuccess": "Current season successfully deactivated.",
+  "seasonActivatedSuccess": "Current season successfully activated."
 }

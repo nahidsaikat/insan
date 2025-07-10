@@ -796,4 +796,32 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get cannotDeleteLocationWithSacks =>
       'অবস্থানে বস্তা থাকাকালীন মুছে ফেলা যাবে না। প্রথমে বস্তা সরান।';
+
+  @override
+  String get currentActiveSeason => 'বর্তমান সক্রিয় সিজন';
+
+  @override
+  String get deactivateCurrentSeason => 'বর্তমান সিজন নিষ্ক্রিয় করুন';
+
+  @override
+  String get deactivateSeasonSubtitle =>
+      'বর্তমানে সক্রিয় সিজনটিকে নিষ্ক্রিয় করুন। এটি আপনাকে সিজনের তালিকায় নিয়ে যাবে।';
+
+  @override
+  String get deactivateSeasonConfirmTitle => 'নিষ্ক্রিয়করণের নিশ্চিতকরণ';
+
+  @override
+  String get deactivateSeasonConfirmMessage =>
+      'আপনি কি নিশ্চিত যে বর্তমান সিজনটিকে নিষ্ক্রিয় করতে চান? এই পদক্ষেপটি বর্তমান সেশনের জন্য পূর্বাবস্থায় ফেরানো যাবে না।';
+
+  @override
+  String get deactivateButton => 'নিষ্ক্রিয় করুন';
+
+  @override
+  String get seasonDeactivatedSuccess =>
+      'বর্তমান সিজন সফলভাবে নিষ্ক্রিয় করা হয়েছে।';
+
+  @override
+  String get seasonActivatedSuccess =>
+      'বর্তমান সিজন সফলভাবে সক্রিয় করা হয়েছে।';
 }

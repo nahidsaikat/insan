@@ -248,5 +248,13 @@
   "totalSacksInLocation": "মোট বস্তা",
   "totalQuantityInLocation": "মোট পরিমাণ",
   "locationNameEmptyError": "অবস্থানের নাম খালি রাখা যাবে না।",
-  "cannotDeleteLocationWithSacks": "অবস্থানে বস্তা থাকাকালীন মুছে ফেলা যাবে না। প্রথমে বস্তা সরান।"
+  "cannotDeleteLocationWithSacks": "অবস্থানে বস্তা থাকাকালীন মুছে ফেলা যাবে না। প্রথমে বস্তা সরান।",
+  "currentActiveSeason": "বর্তমান সক্রিয় সিজন",
+  "deactivateCurrentSeason": "বর্তমান সিজন নিষ্ক্রিয় করুন",
+  "deactivateSeasonSubtitle": "বর্তমানে সক্রিয় সিজনটিকে নিষ্ক্রিয় করুন। এটি আপনাকে সিজনের তালিকায় নিয়ে যাবে।",
+  "deactivateSeasonConfirmTitle": "নিষ্ক্রিয়করণের নিশ্চিতকরণ",
+  "deactivateSeasonConfirmMessage": "আপনি কি নিশ্চিত যে বর্তমান সিজনটিকে নিষ্ক্রিয় করতে চান? এই পদক্ষেপটি বর্তমান সেশনের জন্য পূর্বাবস্থায় ফেরানো যাবে না।",
+  "deactivateButton": "নিষ্ক্রিয় করুন",
+  "seasonDeactivatedSuccess": "বর্তমান সিজন সফলভাবে নিষ্ক্রিয় করা হয়েছে।",
+  "seasonActivatedSuccess": "বর্তমান সিজন সফলভাবে সক্রিয় করা হয়েছে।"
 }

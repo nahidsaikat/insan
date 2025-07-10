@@ -34,7 +34,7 @@ class DashboardActionItem {
 
 class DashboardScreen extends StatefulWidget {
   final DatabaseHelper dbHelper;
-  final Season activeSeason;
+  final Season? activeSeason;
   final Function(Season?) onSeasonChanged; // Callback to notify parent of season change
 
   const DashboardScreen({
@@ -70,14 +70,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void didUpdateWidget(covariant DashboardScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.activeSeason.seasonId != oldWidget.activeSeason.seasonId) {
+    if (widget.activeSeason!.seasonId != oldWidget.activeSeason!.seasonId) {
       _loadDashboardData();
     }
   }
 
   Future<void> _loadDashboardData() async {
     // Fetch all sacks for the active season
-    final allSacks = await widget.dbHelper.getSacks(seasonId: widget.activeSeason.seasonId);
+    final allSacks = await widget.dbHelper.getSacks(seasonId: widget.activeSeason!.seasonId);
 
     // Filter sacks by status
     final purchasedSacks = allSacks; // All sacks recorded are considered purchased
@@ -100,8 +100,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // --- END NEW ---
 
     // Fetch expenses and investments for the active season
-    final expenses = await widget.dbHelper.getExpenses(seasonId: widget.activeSeason.seasonId);
-    final investments = await widget.dbHelper.getInvestments(seasonId: widget.activeSeason.seasonId);
+    final expenses = await widget.dbHelper.getExpenses(seasonId: widget.activeSeason!.seasonId);
+    final investments = await widget.dbHelper.getInvestments(seasonId: widget.activeSeason!.seasonId);
 
     _totalExpenses = expenses.fold(0.0, (sum, expense) => sum + expense.amount);
     _totalInvestments = investments.fold(0.0, (sum, investment) => sum + investment.amount);
@@ -124,7 +124,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => PurchaseSaleScreen(
               dbHelper: widget.dbHelper,
-              activeSeason: widget.activeSeason,
+              activeSeason: widget.activeSeason!,
               initialTabIndex: 0, // Go to Purchase tab
             ),
           )).then((_) => _loadDashboardData()); // Reload on return
@@ -137,7 +137,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => SaleScreen(
               dbHelper: widget.dbHelper,
-              activeSeasonId: widget.activeSeason.seasonId!,
+              activeSeasonId: widget.activeSeason!.seasonId!,
             ),
           )).then((_) => _loadDashboardData()); // Reload on return
         },
@@ -149,7 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ExpenseInvestmentScreen(
               dbHelper: widget.dbHelper,
-              activeSeason: widget.activeSeason,
+              activeSeason: widget.activeSeason!,
               initialTabIndex: 0, // Go to Expense tab
             ),
           )).then((_) => _loadDashboardData()); // Reload on return
@@ -162,7 +162,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ExpenseInvestmentScreen(
               dbHelper: widget.dbHelper,
-              activeSeason: widget.activeSeason,
+              activeSeason: widget.activeSeason!,
               initialTabIndex: 1, // Go to Investment tab
             ),
           )).then((_) => _loadDashboardData()); // Reload on return
@@ -187,7 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => InventoryScreen(
               dbHelper: widget.dbHelper,
-              activeSeasonId: widget.activeSeason.seasonId!,
+              activeSeasonId: widget.activeSeason!.seasonId!,
             ),
           )).then((_) => _loadDashboardData());
         },
@@ -226,7 +226,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ProfitDistributionScreen(
               dbHelper: widget.dbHelper,
-              activeSeason: widget.activeSeason,
+              activeSeason: widget.activeSeason!,
             ),
           )).then((_) => _loadDashboardData());
         },
@@ -262,7 +262,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               _loadDashboardData(); // Reload data after potential season change
             },
             child: Text(
-              '${localizations.activeSeasonLabel}: ${widget.activeSeason.name}',
+              '${localizations.activeSeasonLabel}: ${widget.activeSeason!.name}',
               style: const TextStyle(color: Colors.white),
             ),
           ),
@@ -272,7 +272,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                MaterialPageRoute(builder: (context) => SettingsScreen(
+                  dbHelper: widget.dbHelper,
+                  activeSeason: widget.activeSeason!,
+                  onSeasonChanged: widget.onSeasonChanged,
+                )),
               );
             },
           ),

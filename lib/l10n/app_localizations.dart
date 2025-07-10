@@ -1591,6 +1591,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cannot delete location with sacks in it. Please move sacks first.'**
   String get cannotDeleteLocationWithSacks;
+
+  /// No description provided for @currentActiveSeason.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Active Season'**
+  String get currentActiveSeason;
+
+  /// No description provided for @deactivateCurrentSeason.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Current Season'**
+  String get deactivateCurrentSeason;
+
+  /// No description provided for @deactivateSeasonSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark the currently active season as inactive. This will take you to the season list.'**
+  String get deactivateSeasonSubtitle;
+
+  /// No description provided for @deactivateSeasonConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Deactivation'**
+  String get deactivateSeasonConfirmTitle;
+
+  /// No description provided for @deactivateSeasonConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to deactivate the current season? This action cannot be undone for the current session.'**
+  String get deactivateSeasonConfirmMessage;
+
+  /// No description provided for @deactivateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate'**
+  String get deactivateButton;
+
+  /// No description provided for @seasonDeactivatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Current season successfully deactivated.'**
+  String get seasonDeactivatedSuccess;
+
+  /// No description provided for @seasonActivatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Current season successfully activated.'**
+  String get seasonActivatedSuccess;
 }
 
 class _AppLocalizationsDelegate
