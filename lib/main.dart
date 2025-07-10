@@ -68,6 +68,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final settingsProvider = Provider.of<SettingsProvider>(context);
 
     return MaterialApp(
       title: 'insan',
@@ -96,10 +97,10 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''),
-        Locale('bn', ''),
+        Locale('en', ''), // English
+        Locale('bn', ''), // Bengali
       ],
-      locale: const Locale('bn', ''),
+      locale: settingsProvider.locale,
 
       home: _isLoading // Check the loading state first
           ? const Scaffold(

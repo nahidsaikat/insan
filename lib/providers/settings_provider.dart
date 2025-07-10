@@ -1,42 +1,57 @@
-// lib/providers/settings_provider.dart
+// lib/providers/settings_provider.dart (Example of how it should look)
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsProvider extends ChangeNotifier {
+class SettingsProvider with ChangeNotifier {
+  ThemeMode _themeMode = ThemeMode.system;
   String _currencySymbol = '\$'; // Default currency symbol
-  String _dateFormat = 'DD/MM/YYYY'; // Default date format
+  Locale _locale = const Locale('en', ''); // Default locale
 
-  // List of available options (you can expand these)
-  static const List<String> availableCurrencySymbols = ['\$', '৳', '€', '£', '₹']; // $, BDT, EUR, GBP, INR
-  static const List<String> availableDateFormats = ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'];
+  // Static list of available currency symbols (if not already in SettingsProvider)
+  static const List<String> availableCurrencySymbols = ['৳', '\$', '€', '£']; // Added '৳' for Taka
 
+  ThemeMode get themeMode => _themeMode;
   String get currencySymbol => _currencySymbol;
-  String get dateFormat => _dateFormat;
+  Locale get locale => _locale; // Getter for locale
 
   SettingsProvider() {
-    _loadPreferences();
+    _loadSettings();
   }
 
-  Future<void> _loadPreferences() async {
+  Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
+    _themeMode = ThemeMode.values[prefs.getInt('themeMode') ?? ThemeMode.system.index];
     _currencySymbol = prefs.getString('currencySymbol') ?? '\$';
-    _dateFormat = prefs.getString('dateFormat') ?? 'DD/MM/YYYY';
+    _locale = Locale(prefs.getString('languageCode') ?? 'en', ''); // Load language code
+
     notifyListeners();
   }
 
-  Future<void> setCurrencySymbol(String symbol) async {
-    if (_currencySymbol == symbol) return;
+  void toggleTheme(bool isDarkMode) {
+    _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    _saveSettings();
+    notifyListeners();
+  }
+
+  void setCurrencySymbol(String symbol) {
     _currencySymbol = symbol;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('currencySymbol', symbol);
+    _saveSettings();
     notifyListeners();
   }
 
-  Future<void> setDateFormat(String format) async {
-    if (_dateFormat == format) return;
-    _dateFormat = format;
+  // --- New method to set locale ---
+  void setLocale(Locale newLocale) {
+    if (_locale != newLocale) {
+      _locale = newLocale;
+      _saveSettings();
+      notifyListeners();
+    }
+  }
+
+  Future<void> _saveSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('dateFormat', format);
-    notifyListeners();
+    prefs.setInt('themeMode', _themeMode.index);
+    prefs.setString('currencySymbol', _currencySymbol);
+    prefs.setString('languageCode', _locale.languageCode); // Save language code
   }
 }

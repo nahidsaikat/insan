@@ -256,5 +256,8 @@
   "deactivateSeasonConfirmMessage": "Are you sure you want to deactivate the current season? This action cannot be undone for the current session.",
   "deactivateButton": "Deactivate",
   "seasonDeactivatedSuccess": "Current season successfully deactivated.",
-  "seasonActivatedSuccess": "Current season successfully activated."
+  "seasonActivatedSuccess": "Current season successfully activated.",
+  "language": "Language",
+  "english": "English",
+  "bengali": "Bengali"
 }

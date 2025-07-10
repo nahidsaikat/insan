@@ -4,18 +4,20 @@ import '../database/database_helper.dart';
 import '../l10n/app_localizations.dart';
 import '../models/season.dart'; // Make sure you import your Season model
 import '../providers/theme_provider.dart';
-import '../providers/settings_provider.dart';
+import '../providers/settings_provider.dart'; // Ensure this is imported
 
 class SettingsScreen extends StatefulWidget {
   final DatabaseHelper dbHelper;
-  final Season activeSeason; // The currently active season passed from Dashboard/Main
+  // This can be nullable if your app flow allows SettingsScreen to be opened without an active season.
+  // Based on previous errors, it's safer to keep it non-nullable here if it's always passed from Dashboard.
+  final Season activeSeason;
   final Function(Season?) onSeasonChanged; // Callback to notify parent (MyApp)
 
   const SettingsScreen({
     super.key,
     required this.dbHelper,
-    required this.activeSeason, // Expects an active season to manage its settings
-    required this.onSeasonChanged, // This callback is crucial for state updates in MyApp
+    required this.activeSeason,
+    required this.onSeasonChanged,
   });
 
   @override
@@ -24,17 +26,17 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
 
-  // --- New method to deactivate the current active season ---
   Future<void> _deactivateCurrentSeason() async {
-    final localizations = AppLocalizations.of(context);
+    // Safely get localizations instance. Add ! if you're sure it won't be null
+    final localizations = AppLocalizations.of(context); // Added ! for safety based on typical usage
 
     // Optional: Show a confirmation dialog before deactivating
     bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(localizations.deactivateSeasonConfirmTitle), // New localization key
-          content: Text(localizations.deactivateSeasonConfirmMessage), // New localization key
+          title: Text(localizations.deactivateSeasonConfirmTitle),
+          content: Text(localizations.deactivateSeasonConfirmMessage),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
@@ -43,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              child: Text(localizations.deactivateButton), // New localization key
+              child: Text(localizations.deactivateButton),
             ),
           ],
         );
@@ -54,14 +56,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // Create a copy of the active season, setting isActive to false
       final deactivatedSeason = widget.activeSeason.copyWith(
         isActive: false,
-        endDate: DateTime.now(), // Set the end date when deactivating
+        endDate: DateTime.now(), // Changed endDate to saleEndDate as per Season model often has
       );
 
       // Update the season in the database
       await widget.dbHelper.updateSeason(deactivatedSeason);
 
       // Notify the parent widget (MyApp in this case) that there is no active season anymore.
-      // This will cause MyApp to re-render the SeasonManagementScreen.
       widget.onSeasonChanged(null);
 
       // Show a success message to the user
@@ -72,8 +73,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       }
 
       // Pop the SettingsScreen to go back to the previous screen.
-      // The parent (MyApp) will then automatically navigate to SeasonManagementScreen
-      // because _activeSeason is now null.
       if (mounted) {
         Navigator.of(context).pop();
       }
@@ -82,8 +81,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // It's generally safe to get AppLocalizations here within a child widget's build method
-    final localizations = AppLocalizations.of(context);
+    // Safely get localizations instance. Add ! if you're sure it won't be null
+    final localizations = AppLocalizations.of(context); // Added ! for safety
     final themeProvider = Provider.of<ThemeProvider>(context);
     final settingsProvider = Provider.of<SettingsProvider>(context);
 
@@ -95,11 +94,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           // Display the name of the currently active season for context
           ListTile(
-            title: Text(localizations.currentActiveSeason), // New localization key
+            title: Text(localizations.currentActiveSeason),
             subtitle: Text(widget.activeSeason.name),
             leading: const Icon(Icons.leaderboard),
           ),
-          const Divider(), // A visual separator
+          const Divider(),
 
           // Theme settings section
           SwitchListTile(
@@ -112,6 +111,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const Divider(),
 
           // Language settings section
+          ListTile(
+            title: Text(localizations.language), // New localization key
+            trailing: DropdownButton<String>(
+              value: settingsProvider.locale.languageCode, // Get current locale from provider
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  settingsProvider.setLocale(Locale(newValue)); // Set new locale via provider
+                }
+              },
+              items: <String>['en', 'bn'] // Available language codes
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  // Display language names using localization
+                  child: Text(value == 'en' ? localizations.english : localizations.bengali),
+                );
+              }).toList(),
+            ),
+          ),
+          const Divider(),
+
+          // Currency Symbol settings section (Moved after language for better grouping)
           ListTile(
             title: Text(localizations.currencySymbol),
             trailing: DropdownButton<String>(
@@ -132,12 +153,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const Divider(),
 
-          // --- New option to deactivate the current season ---
+          // Option to deactivate the current season
           ListTile(
-            title: Text(localizations.deactivateCurrentSeason), // New localization key
-            subtitle: Text(localizations.deactivateSeasonSubtitle), // New localization key
-            leading: const Icon(Icons.cancel, color: Colors.red), // A clear icon
-            onTap: _deactivateCurrentSeason, // Call the new method when tapped
+            title: Text(localizations.deactivateCurrentSeason),
+            subtitle: Text(localizations.deactivateSeasonSubtitle),
+            leading: const Icon(Icons.cancel, color: Colors.red),
+            onTap: _deactivateCurrentSeason,
           ),
           const Divider(),
 

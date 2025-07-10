@@ -815,4 +815,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get seasonActivatedSuccess => 'Current season successfully activated.';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get bengali => 'Bengali';
 }

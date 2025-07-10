@@ -824,4 +824,13 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get seasonActivatedSuccess =>
       'বর্তমান সিজন সফলভাবে সক্রিয় করা হয়েছে।';
+
+  @override
+  String get language => 'ভাষা';
+
+  @override
+  String get english => 'ইংরেজি';
+
+  @override
+  String get bengali => 'বাংলা';
 }

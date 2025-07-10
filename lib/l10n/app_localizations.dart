@@ -1639,6 +1639,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Current season successfully activated.'**
   String get seasonActivatedSuccess;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @bengali.
+  ///
+  /// In en, this message translates to:
+  /// **'Bengali'**
+  String get bengali;
 }
 
 class _AppLocalizationsDelegate
