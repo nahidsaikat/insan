@@ -133,25 +133,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const Divider(),
 
           // Currency Symbol settings section (Moved after language for better grouping)
-          ListTile(
-            title: Text(localizations.currencySymbol),
-            trailing: DropdownButton<String>(
-              value: settingsProvider.currencySymbol,
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  settingsProvider.setCurrencySymbol(newValue);
-                }
-              },
-              items: SettingsProvider.availableCurrencySymbols
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ),
-          const Divider(),
+          // ListTile(
+          //   title: Text(localizations.currencySymbol),
+          //   trailing: DropdownButton<String>(
+          //     value: settingsProvider.currencySymbol,
+          //     onChanged: (String? newValue) {
+          //       if (newValue != null) {
+          //         settingsProvider.setCurrencySymbol(newValue);
+          //       }
+          //     },
+          //     items: SettingsProvider.availableCurrencySymbols
+          //         .map<DropdownMenuItem<String>>((String value) {
+          //       return DropdownMenuItem<String>(
+          //         value: value,
+          //         child: Text(value),
+          //       );
+          //     }).toList(),
+          //   ),
+          // ),
+          // const Divider(),
 
           // Option to deactivate the current season
           ListTile(
